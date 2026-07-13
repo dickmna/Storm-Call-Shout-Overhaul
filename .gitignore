@@ -1,0 +1,15 @@
+[Bb]uild*/
+.vs/
+.vscode/
+CMakeUserPresets.json
+out/
+dist/
+*.sln
+*.vcxproj*
+*.pdb
+*.ilk
+*.obj
+*.dll
+*.pex
+*.esp
+*.zip
