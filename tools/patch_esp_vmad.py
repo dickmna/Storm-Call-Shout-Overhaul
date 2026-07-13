@@ -1,7 +1,7 @@
 """Patch the fixed-size SCSO controller VMAD values without xEdit.
 
 The tool intentionally changes only existing Int properties, so record and group
-sizes remain byte-for-byte stable. It is used to build the v1.7.0 runtime ESP
+sizes remain byte-for-byte stable. It is used to build the v2.1.0 runtime ESP
 from the v1.6.1 release ESP.
 """
 

@@ -43,12 +43,12 @@ Data/Scripts/ultrastormcallunified.pex
 
 The ESP VMAD properties are part of the runtime contract documented in [esp-records.md](esp-records.md). Compiling the PEX alone does not create or update those record attachments.
 
-For v1.7.0, patch the existing v1.6.1 release ESP without xEdit:
+For v2.1.0, patch the existing v1.6.1 release ESP without xEdit:
 
 ```powershell
 python tools/patch_esp_vmad.py `
   path/to/v1.6.1/StormCallShoutOverhaul.esp `
-  path/to/v1.7.0/StormCallShoutOverhaul.esp
+  path/to/v2.1.0/StormCallShoutOverhaul.esp
 ```
 
 The tool changes only the existing fixed-size `iTargetsPerUpdate` and `iActiveSearchPasses` VMAD Int values. It verifies all six controller records before writing the destination ESP.

@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.7.0
+## 2.1.0
 
+- Published the variable-pass, lower-frequency update as `v2.1.0`.
 - Increased the main update interval from `0.50-1.10` seconds to `1.50-3.00` seconds.
 - Changed active-controller passes from a fixed two passes to `1 / 2 / 3` passes for Storm Call words one, two, and three.
 - Preserved the v1.6.1 `0.12-0.35` second randomized stagger between every pair of consecutive active passes.

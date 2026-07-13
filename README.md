@@ -1,6 +1,6 @@
 # Storm Call Shout Overhaul
 
-Storm Call Shout Overhaul (SCSO) is a standalone Skyrim Special Edition / Anniversary Edition overhaul for the vanilla Storm Call shout. The current source release is **v1.7.0**.
+Storm Call Shout Overhaul (SCSO) is a standalone Skyrim Special Edition / Anniversary Edition overhaul for the vanilla Storm Call shout. The current source release is **v2.1.0**.
 
 The storm follows the shouter, dynamically searches a 600-foot three-dimensional sphere, selects hostile actors only, supports flying targets, and can strike several different enemies during one update. Damage comes from the final active-effect magnitude, so shout overhauls can scale SCSO through normal magnitude changes instead of an SCSO-specific dragon-soul formula.
 
