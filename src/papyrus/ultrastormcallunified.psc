@@ -16,8 +16,8 @@ Sound Property VOCShoutImpactStormCallFar Auto
 
 Float Property fHeight = 3500.0 Auto
 Float Property fImodFadeDistance = 3072.0 Auto
-Float Property fMaxDelay = 1.10 Auto
-Float Property fMinDelay = 0.50 Auto
+Float Property fMaxDelay = 3.00 Auto
+Float Property fMinDelay = 1.50 Auto
 Float Property fRadiusSmall = 100.0 Auto
 Float Property fRadiusWide = 900.0 Auto
 {Visual source and miss spread. Overridden per Storm Call word in VMAD: 100 / 300 / 600 world units.}
@@ -35,8 +35,8 @@ Float Property fVisualTargetHeight = 96.0 Auto
 Bool Property bUseMagnitudeDamage = True Auto
 Float Property fMagnitudeDamageMultiplier = 1.0 Auto
 Float Property fMinimumMagnitudeDamage = 0.0 Auto
-Int Property iTargetsPerUpdate = 3 Auto
-{Maximum different valid actors this script instance can strike in one update.}
+Int Property iTargetsPerUpdate = 0 Auto
+{Optional per-pass target cap. Zero or less means no gameplay cap; the pass stops when target acquisition is exhausted.}
 Bool Property bTrackInitialTarget = False Auto
 {If true, prefer the magic effect's initial target before dynamic fallback searches.}
 Int Property iActiveSearchPasses = 1 Auto
@@ -131,12 +131,12 @@ EndEvent
 
 Function RunTrackerUpdate()
 	Actor targetToStrike = Victim
-	If !IsValidNewTarget(targetToStrike, None, None, None)
+	If !IsValidNewTarget(targetToStrike, None)
 		targetToStrike = FindValidTarget()
 		Victim = targetToStrike
 	EndIf
 
-	If StrikeMultipleTargets(targetToStrike) > 0
+	If StrikeAvailableTargets(targetToStrike) > 0
 		bInvalidTarget = False
 	Else
 		bInvalidTarget = True
@@ -158,7 +158,7 @@ Function RunActiveSearchUpdate()
 
 		If bCasterIsPlayer
 			Victim = FindValidTarget()
-			If StrikeMultipleTargets(Victim) > 0
+			If StrikeAvailableTargets(Victim) > 0
 				bInvalidTarget = False
 			EndIf
 		Else
@@ -207,23 +207,23 @@ Function MoveCastingSource()
 EndFunction
 
 Actor Function FindValidTarget()
-	Return FindValidTargetExcept(None, None, None)
+	Return FindValidTargetExcept(None)
 EndFunction
 
-Actor Function FindValidTargetExcept(Actor excluded01, Actor excluded02, Actor excluded03)
+Actor Function FindValidTargetExcept(Form[] excludedTargets)
 	If Shouter == None
 		Return None
 	EndIf
 
 	Actor candidate = Shouter.GetCombatTarget()
-	If IsValidNewTarget(candidate, excluded01, excluded02, excluded03)
+	If IsValidNewTarget(candidate, excludedTargets)
 		Return candidate
 	EndIf
 
 	Int tries = 0
 	While tries < iRandomSearchAttempts
 		candidate = Game.FindRandomActorFromRef(Shouter as ObjectReference, fDynamicSearchRadius)
-		If IsValidNewTarget(candidate, excluded01, excluded02, excluded03)
+		If IsValidNewTarget(candidate, excludedTargets)
 			Return candidate
 		EndIf
 		tries += 1
@@ -252,54 +252,56 @@ Bool Function IsWithinDynamicSearchSphere(Actor candidate)
 	Return Shouter.GetDistance(candidate as ObjectReference) <= fDynamicSearchRadius
 EndFunction
 
-Bool Function IsExcludedTarget(Actor candidate, Actor excluded01, Actor excluded02, Actor excluded03)
+Bool Function IsExcludedTarget(Actor candidate, Form[] excludedTargets)
 	If candidate == None
 		Return True
 	EndIf
 
-	Return candidate == excluded01 || candidate == excluded02 || candidate == excluded03
+	If excludedTargets == None
+		Return False
+	EndIf
+
+	Return excludedTargets.Find(candidate as Form) >= 0
 EndFunction
 
-Bool Function IsValidNewTarget(Actor candidate, Actor excluded01, Actor excluded02, Actor excluded03)
-	If IsExcludedTarget(candidate, excluded01, excluded02, excluded03)
+Bool Function IsValidNewTarget(Actor candidate, Form[] excludedTargets)
+	If IsExcludedTarget(candidate, excludedTargets)
 		Return False
 	EndIf
 
 	Return IsValidTarget(candidate) && IsWithinDynamicSearchSphere(candidate)
 EndFunction
 
-Int Function StrikeMultipleTargets(Actor preferredTarget)
+Int Function StrikeAvailableTargets(Actor preferredTarget)
 	Int targetLimit = iTargetsPerUpdate
-	If targetLimit < 1
-		targetLimit = 1
-	ElseIf targetLimit > 3
-		targetLimit = 3
+	Int arrayChunkSize = 16
+	Form[] struckTargets = Utility.CreateFormArray(arrayChunkSize)
+	If struckTargets == None
+		Return 0
 	EndIf
 
-	Actor struck01 = None
-	Actor struck02 = None
-	Actor struck03 = None
 	Actor targetToStrike = preferredTarget
 	Int struckCount = 0
 
-	While struckCount < targetLimit
-		If !IsValidNewTarget(targetToStrike, struck01, struck02, struck03)
-			targetToStrike = FindValidTargetExcept(struck01, struck02, struck03)
+	While targetLimit <= 0 || struckCount < targetLimit
+		If !IsValidNewTarget(targetToStrike, struckTargets)
+			targetToStrike = FindValidTargetExcept(struckTargets)
 		EndIf
 
-		If !IsValidNewTarget(targetToStrike, struck01, struck02, struck03)
+		If !IsValidNewTarget(targetToStrike, struckTargets)
 			Return struckCount
 		EndIf
 
-		StrikeTarget(targetToStrike, 1)
-		If struckCount == 0
-			struck01 = targetToStrike
-		ElseIf struckCount == 1
-			struck02 = targetToStrike
-		Else
-			struck03 = targetToStrike
+		If struckCount >= struckTargets.Length
+			Form[] expandedTargets = Utility.ResizeFormArray(struckTargets, struckTargets.Length + arrayChunkSize)
+			If expandedTargets == None || expandedTargets.Length <= struckTargets.Length
+				Return struckCount
+			EndIf
+			struckTargets = expandedTargets
 		EndIf
 
+		StrikeTarget(targetToStrike, 1)
+		struckTargets[struckCount] = targetToStrike as Form
 		struckCount += 1
 		targetToStrike = None
 	EndWhile
