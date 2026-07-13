@@ -29,7 +29,7 @@ Forceful Tongue is not required. The ESP masters are only `Skyrim.esm` and `Upda
 
 ## Installation
 
-Download the install archive from [GitHub Releases](../../releases), install it with Mod Organizer 2 or Vortex, and enable `StormCallShoutOverhaul.esp`.
+Download the install archive from [GitHub Releases](https://github.com/dickmna/Storm-Call-Shout-Overhaul/releases), install it with Mod Organizer 2 or Vortex, and enable `StormCallShoutOverhaul.esp`.
 
 Load the ESP after mods that edit the vanilla Storm Call spells, magic effects, bolt spells, or projectile when SCSO should win those records. A conflict-resolution patch may be necessary when another shout overhaul must provide the final magnitudes.
 
