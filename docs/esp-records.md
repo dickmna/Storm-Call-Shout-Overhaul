@@ -17,7 +17,7 @@ The following vanilla records carry `ultrastormcallunified` VMAD data:
 - Tracker effects: `000A1A58`, `000A1A5C`, `000A1A5B`.
 - Active/self effects: `000E3F0A`, `000E3F09`, `000D5E81`.
 
-Every instance has `iTargetsPerUpdate=3`, `fDynamicSearchRadius=12800`, and `bUseReturnStrokeVisual=False`. Tracker instances use one pass; active instances use two passes.
+Every instance has `iTargetsPerUpdate=0`, `fDynamicSearchRadius=12800`, and `bUseReturnStrokeVisual=False`. A target limit of zero means that a pass continues until acquisition is exhausted. Tracker instances use one pass. Active instances use one pass for `000E3F0A`, two passes for `000E3F09`, and three passes for `000D5E81`.
 
 ## Visual carrier spells
 

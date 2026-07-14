@@ -5,7 +5,7 @@
 The six vanilla Storm Call controller effects all attach `ultrastormcallunified`:
 
 - The three non-self effects run in tracker mode with `bTrackInitialTarget=True` and one pass.
-- The three self effects run in active-controller mode with `bTrackInitialTarget=False` and two staggered passes.
+- The three self effects run in active-controller mode with `bTrackInitialTarget=False` and `1 / 2 / 3` passes by shout word.
 
 This preserves the original initial-area application while providing continuous player-centered reacquisition during the storm.
 
@@ -13,11 +13,13 @@ This preserves the original initial-area application while providing continuous 
 
 A candidate must be loaded, alive, different from the shouter, hostile to the shouter, and inside `12800` world units of the shouter. The current combat target is tried first. Random actors around the shouter are then sampled until a valid candidate is found or the configured attempt limit is reached.
 
-Each pass can strike as many as three distinct actors. Actors already selected by the same pass are excluded. The use of `ObjectReference.GetDistance` makes the test a complete 3D sphere, so flying and ground targets use the same rule.
+Each pass has no fixed gameplay target cap. Actors already selected by the same pass are stored in an SKSE-created Form array and excluded from later searches in that pass. The array grows in chunks as needed; the pass ends when repeated acquisition attempts cannot find another valid unstruck actor. The use of `ObjectReference.GetDistance` makes the test a complete 3D sphere, so flying and ground targets use the same rule.
 
 ## Timing
 
-Every script instance schedules its next main update after a random `0.50-1.10` second delay. An active controller runs two passes during that update and waits a random `0.12-0.35` seconds between them. When no valid player target exists, active mode retries after `0.25` seconds.
+Every script instance schedules its next main update after a random `1.50-3.00` second delay. Active controllers run `1 / 2 / 3` passes for words one, two, and three. Controllers with multiple passes wait a random `0.12-0.35` seconds between every pair of consecutive passes, preserving the v1.6.1 staggered cadence. When no valid player target exists, active mode retries after `0.25` seconds.
+
+Before either tracker or active mode runs, the unified controller checks the shouter's current parent cell. A missing cell during a transition or an interior cell suppresses target acquisition and lightning while preserving the active effect and its normal duration. Suppressed instances continue checking at the normal `1.50-3.00` second interval and resume automatically after the shouter returns to an exterior cell.
 
 ## Damage
 

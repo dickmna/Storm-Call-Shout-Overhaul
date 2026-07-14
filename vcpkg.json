@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "storm-call-shout-overhaul",
-  "version-semver": "1.6.1",
+  "version-semver": "2.1.0",
   "description": "Source dependencies for the SCSO projectile-bounds SKSE plugin.",
   "license": "MIT",
   "supports": "windows & x64",
