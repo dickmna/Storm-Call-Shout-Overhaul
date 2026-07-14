@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1
+
+- Renamed the current patch release from `v2.1.0` to `v2.1.1`.
+- Paused all target searches and lightning strikes in interior cells, preventing an exterior storm from clearing a dungeon after a cell transition; the storm resumes if the shouter returns outside before its duration expires.
+- Kept the v2.1.0 ESP and SKSE DLL unchanged; this fix updates the unified Papyrus script.
+
 ## 2.1.0
 
 - Published the variable-pass, lower-frequency update as `v2.1.0`.
@@ -8,7 +14,6 @@
 - Preserved the v1.6.1 `0.12-0.35` second randomized stagger between every pair of consecutive active passes.
 - Removed the fixed three-target batch cap. A pass now grows an SKSE Form array as needed and continues until target acquisition is exhausted.
 - Set `iTargetsPerUpdate=0` in all six controller VMAD attachments, where zero means unlimited.
-- Paused all target searches and lightning strikes in interior cells, preventing an exterior storm from clearing a dungeon after a cell transition; the storm resumes if the shouter returns outside before its duration expires.
 
 ## 1.6.1
 
