@@ -39,6 +39,8 @@ Int Property iTargetsPerUpdate = 0 Auto
 {Optional per-pass target cap. Zero or less means no gameplay cap; the pass stops when target acquisition is exhausted.}
 Bool Property bTrackInitialTarget = False Auto
 {If true, prefer the magic effect's initial target before dynamic fallback searches.}
+Bool Property bPauseInInteriors = True Auto
+{If true, keep the storm duration running but suspend all target searches and strikes while the shouter is in an interior cell.}
 Int Property iActiveSearchPasses = 1 Auto
 {How many active-search passes this instance performs each update. Used to replace old B/C duplicate loops.}
 Float Property fActivePassDelayMin = 0.12 Auto
@@ -111,14 +113,19 @@ EndEvent
 
 Event OnUpdate()
 	If bKeepUpdating && MAGProjectileStormVar != None && MAGProjectileStormVar.GetValue() == 1.0 && ActivatorRef != None && Shouter != None
-		If bTrackInitialTarget
+		Bool pausedForInterior = ShouldPauseForInterior()
+		If pausedForInterior
+			bInvalidTarget = False
+		ElseIf bTrackInitialTarget
 			RunTrackerUpdate()
 		Else
 			RunActiveSearchUpdate()
 		EndIf
 
 		If bKeepUpdating
-			If bInvalidTarget && bCasterIsPlayer && !bTrackInitialTarget
+			If pausedForInterior
+				RegisterForSingleUpdate(Utility.RandomFloat(fMinDelay, fMaxDelay))
+			ElseIf bInvalidTarget && bCasterIsPlayer && !bTrackInitialTarget
 				RegisterForSingleUpdate(0.25)
 			Else
 				RegisterForSingleUpdate(Utility.RandomFloat(fMinDelay, fMaxDelay))
@@ -128,6 +135,19 @@ Event OnUpdate()
 		StopStorm()
 	EndIf
 EndEvent
+
+Bool Function ShouldPauseForInterior()
+	If !bPauseInInteriors || Shouter == None
+		Return False
+	EndIf
+
+	Cell shouterCell = Shouter.GetParentCell()
+	If shouterCell == None
+		Return True
+	EndIf
+
+	Return shouterCell.IsInterior()
+EndFunction
 
 Function RunTrackerUpdate()
 	Actor targetToStrike = Victim

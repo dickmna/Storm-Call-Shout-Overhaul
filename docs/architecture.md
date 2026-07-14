@@ -19,6 +19,8 @@ Each pass has no fixed gameplay target cap. Actors already selected by the same 
 
 Every script instance schedules its next main update after a random `1.50-3.00` second delay. Active controllers run `1 / 2 / 3` passes for words one, two, and three. Controllers with multiple passes wait a random `0.12-0.35` seconds between every pair of consecutive passes, preserving the v1.6.1 staggered cadence. When no valid player target exists, active mode retries after `0.25` seconds.
 
+Before either tracker or active mode runs, the unified controller checks the shouter's current parent cell. A missing cell during a transition or an interior cell suppresses target acquisition and lightning while preserving the active effect and its normal duration. Suppressed instances continue checking at the normal `1.50-3.00` second interval and resume automatically after the shouter returns to an exterior cell.
+
 ## Damage
 
 At effect start, every instance reads `GetMagnitude()`. `SCSOStormMagnitudeVar` stores the highest positive value contributed by the currently active storm instances, while `SCSOStormActiveCountVar` controls initialization and cleanup.

@@ -15,6 +15,7 @@ The storm follows the shouter, dynamically searches a 600-foot three-dimensional
 - Active controller mode performs `1 / 2 / 3` dynamic passes by shout word.
 - Two- and three-pass updates retain the v1.6.1 `0.12-0.35` second stagger between consecutive passes.
 - Main update delay is `1.50-3.00` seconds.
+- Target searches and lightning strikes pause in interior cells and resume after the shouter returns outside.
 - The real Storm Call bolt spells are zero-damage visual carriers; the unified script applies the shared final magnitude once.
 - The SKSE plugin changes only the loaded 3D bounds of `ShockBoltAimStorm` (`PROJ 000E4CB5`). It does not alter targeting, timing, damage, range, or scaling.
 
