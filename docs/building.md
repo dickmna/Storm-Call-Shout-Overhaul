@@ -1,54 +1,32 @@
-# Building
+# Building the published source
 
-## C++ SKSE plugin
+The source matches Stable 2.1.2 and Pure SKSE Beta 3.0.1 for Skyrim 1.7.104 / SKSE 2.3.1. Skyrim 1.6.1170 users should use Stable 2.1.1.
 
-Requirements:
+## C++
 
-- Visual Studio 2022 with Desktop development with C++
-- CMake 3.24 or later
-- vcpkg
-- Git submodules
+Use Windows, Visual Studio 2022 with x64 C++ tools (release compiler MSVC 19.44), and CMake 3.24+. Both projects use C++23, /MD and statically linked fmt/spdlog.
 
-Clone and initialize dependencies:
+From the repository root:
 
 ```powershell
-git clone --recurse-submodules https://github.com/dickmna/Storm-Call-Shout-Overhaul.git
-cd Storm-Call-Shout-Overhaul
+./scripts/BuildDependencies.ps1 -CheckOnly
+./scripts/BuildDependencies.ps1
+cmake -S . -B build/stable -A x64
+cmake --build build/stable --config Release
 ```
 
-Configure with the vcpkg toolchain:
+The dependency script builds the exact supplied source under `dependencies/` and installs it to `build/commonlib-installed`. It disables CommonLib tests, VR and IPO, enables patch safety, and uses the bundled MinHook hde64 source. It also installs the CommonLib CMake helper/version metadata needed by `find_package(CommonLibSSE 10.0.1)`.
 
-```powershell
-cmake -S . -B build -A x64 `
-  -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
-cmake --build build --config Release
-```
+The CommonLib source comes from 10.0.1 commit `de1ca9826919d04649e21e93358d7313459e0a68`, with the release's local export/install adjustments. The optional OpenVR SDK headers, import library and license are pinned to its submodule commit `60eb187801956ad277f1cae6680e3a410ee0873b`. No dependency needs to be cloned as a submodule. The release's dependency snapshot is preserved, rather than substituting newer versions.
 
-Output:
+Stable output: `build/stable/Data/SKSE/Plugins/SCSOProjectileBounds.dll` and `.ini`. Do not ship fmt.dll or spdlog.dll for this rebuilt plugin. Other mods may still need their own copies.
 
-```text
-build/Data/SKSE/Plugins/SCSOProjectileBounds.dll
-build/Data/SKSE/Plugins/SCSOProjectileBounds.ini
-```
+For the alternative Beta, see [../beta/README.md](../beta/README.md). Build only one variant for a player installation.
 
-The shipping build dynamically links `fmt` and `spdlog`; copy the matching x64 release DLLs beside the plugin when constructing an install archive.
+## Papyrus and ESP
 
-## Papyrus
+Compile `src/papyrus/ultrastormcallunified.psc` with the Creation Kit Papyrus compiler, `TESV_Papyrus_Flags.flg`, Skyrim scripts and SKSE script imports. Install the resulting `Scripts/ultrastormcallunified.pex` with `StormCallShoutOverhaul.esp`. Compiler/game imports are not redistributed here.
 
-Compile `src/papyrus/ultrastormcallunified.psc` with the Creation Kit Papyrus compiler against the Skyrim and SKSE source trees. The compiled file must be installed as:
+`tools/patch_esp_vmad.py` preserves the released 2.1.1 controller integer values when preparing the existing 1.6.1 ESP. Stable 2.1.2 also sets the three Storm Call SPEL MDOB fields (`00018609`, `0001860A`, `0001860D`) to the vanilla `Skyrim.esm:000A59AC` menu object. See [esp-records.md](esp-records.md) and [release-2.1.2-validation.json](release-2.1.2-validation.json) for the exact record contract and checks.
 
-```text
-Data/Scripts/ultrastormcallunified.pex
-```
-
-The ESP VMAD properties are part of the runtime contract documented in [esp-records.md](esp-records.md). Compiling the PEX alone does not create or update those record attachments.
-
-For v2.1.1, patch the existing v1.6.1 release ESP without xEdit:
-
-```powershell
-python tools/patch_esp_vmad.py `
-  path/to/v1.6.1/StormCallShoutOverhaul.esp `
-  path/to/v2.1.1/StormCallShoutOverhaul.esp
-```
-
-The tool changes only the existing fixed-size `iTargetsPerUpdate` and `iActiveSearchPasses` VMAD Int values. It verifies all six controller records before writing the destination ESP.
+Use the published 2.1.2 ESP as the record baseline; the repository does not redistribute the game's master files. Native/Papyrus source was restored byte-for-byte. New build instructions and CMake search defaults do not change plugin logic. A complete native rebuild and in-game test were not performed during this source sync.

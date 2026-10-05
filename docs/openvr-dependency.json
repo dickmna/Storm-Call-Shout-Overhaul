@@ -1,0 +1,42 @@
+{
+  "commit": "60eb187801956ad277f1cae6680e3a410ee0873b",
+  "reason": "CommonLibSSE-NG 10.0.1 gitlink pin; headers, win64 import library and license required by the source build",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha": "ee83337d7fcb726d14cc10f7dd2fda6799d8a135",
+      "size": 1488
+    },
+    {
+      "path": "headers/openvr.h",
+      "sha": "801a690c7d45d1d72f298874310aaeb2af09c419",
+      "size": 204818
+    },
+    {
+      "path": "headers/openvr_api.cs",
+      "sha": "e8764c459dba4b41236e1237b3f5ff289a4808f8",
+      "size": 235800
+    },
+    {
+      "path": "headers/openvr_api.json",
+      "sha": "a6bd7cbdb894933f8fcba60b455b5b9717760ab7",
+      "size": 184167
+    },
+    {
+      "path": "headers/openvr_capi.h",
+      "sha": "ee24e90afff4d268699a8045d4b54a7f64b1112b",
+      "size": 118409
+    },
+    {
+      "path": "headers/openvr_driver.h",
+      "sha": "5ece0a008a0f82c3beda8d9095dcb57fcb7696c5",
+      "size": 122396
+    },
+    {
+      "path": "lib/win64/openvr_api.lib",
+      "sha": "ea467746f34a2230ff3183637609f986dcc20aaf",
+      "size": 6442
+    }
+  ],
+  "repository": "https://github.com/ValveSoftware/openvr"
+}

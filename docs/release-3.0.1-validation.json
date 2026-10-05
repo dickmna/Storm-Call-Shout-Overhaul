@@ -1,0 +1,144 @@
+{
+  "CommonLibSSE-NG": {
+    "tag": "10.0.1",
+    "commit": "de1ca9826919d04649e21e93358d7313459e0a68",
+    "source": "https://github.com/alandtse/CommonLibSSE-NG/tree/de1ca9826919d04649e21e93358d7313459e0a68"
+  },
+  "compiler": "MSVC 19.44.35227 / x64 Release / C++23 /MD",
+  "gameExecutionPerformed": false,
+  "addressLibrary": {
+    "runtime": "1.7.104",
+    "format": 5,
+    "hookTargetsMappedToExecutablePESections": true,
+    "checked": [
+      {
+        "name": "Projectile",
+        "vtableID": 210006,
+        "slot": "0xaa",
+        "targetRVA": "0x7fa510"
+      },
+      {
+        "name": "Projectile",
+        "vtableID": 210006,
+        "slot": "0xad",
+        "targetRVA": "0x7faf50"
+      },
+      {
+        "name": "BeamProjectile",
+        "vtableID": 209914,
+        "slot": "0xaa",
+        "targetRVA": "0x7fa510"
+      },
+      {
+        "name": "BeamProjectile",
+        "vtableID": 209914,
+        "slot": "0xab",
+        "targetRVA": "0x7dffe0"
+      },
+      {
+        "name": "BeamProjectile",
+        "vtableID": 209914,
+        "slot": "0xad",
+        "targetRVA": "0x7faf50"
+      },
+      {
+        "name": "MissileProjectile",
+        "vtableID": 209980,
+        "slot": "0xaa",
+        "targetRVA": "0x7fa510"
+      },
+      {
+        "name": "MissileProjectile",
+        "vtableID": 209980,
+        "slot": "0xad",
+        "targetRVA": "0x7faf50"
+      },
+      {
+        "name": "PlayerCharacter",
+        "vtableID": 208040,
+        "slot": "0xad",
+        "targetRVA": "0x745200"
+      },
+      {
+        "name": "Projectile::Launch",
+        "id": 44108,
+        "RVA": "0x7f9300"
+      },
+      {
+        "name": "Projectile::LaunchData vtable",
+        "id": 187478,
+        "RVA": "0x17f63b0"
+      }
+    ]
+  },
+  "reviewedFeedback": [
+    "https://www.nexusmods.com/skyrimspecialedition/mods/179244?tab=posts",
+    "https://www.nexusmods.com/skyrimspecialedition/mods/179244?tab=bugs"
+  ],
+  "PE": {
+    "dll": "SCSOStormCall.dll",
+    "sha256": "c52243a6c1750ad2fe643879a2cfbbc532b82e557f71bc746807f57cb51072f0",
+    "machine": "x64",
+    "pluginVersion": "3.0.1",
+    "pluginName": "SCSOStormCall",
+    "exports": [
+      "SKSEPlugin_Load",
+      "SKSEPlugin_Version"
+    ],
+    "imports": [
+      "KERNEL32.dll",
+      "MSVCP140.dll",
+      "SHELL32.dll",
+      "USER32.dll",
+      "VCRUNTIME140.dll",
+      "VCRUNTIME140_1.dll",
+      "VERSION.dll",
+      "api-ms-win-crt-convert-l1-1-0.dll",
+      "api-ms-win-crt-filesystem-l1-1-0.dll",
+      "api-ms-win-crt-heap-l1-1-0.dll",
+      "api-ms-win-crt-locale-l1-1-0.dll",
+      "api-ms-win-crt-math-l1-1-0.dll",
+      "api-ms-win-crt-runtime-l1-1-0.dll",
+      "api-ms-win-crt-stdio-l1-1-0.dll",
+      "api-ms-win-crt-string-l1-1-0.dll",
+      "api-ms-win-crt-time-l1-1-0.dll",
+      "ole32.dll"
+    ],
+    "addressLibraryV5": true,
+    "usesUpdatedStructs": true,
+    "usesNoStructs": false,
+    "compatibleRuntimes": [
+      "1.7.104.0"
+    ],
+    "minimumSKSE": "2.3.1",
+    "windowsLoaderSucceeded": true
+  },
+  "repeatQueueRegression": {
+    "passed": true,
+    "assertionsEnabledInRelease": true,
+    "productionHeader": "src/skse/repeat_queue.h",
+    "checks": [
+      "natural beam deduplication",
+      "generated beam recursion suppression",
+      "accumulated stagger offsets",
+      "paused delay retention",
+      "invalid delta rejection",
+      "one-time execution",
+      "new game/load reset",
+      "retired ID reuse"
+    ]
+  },
+  "limitations": [
+    "No game execution",
+    "Specific Forceful Tongue, Stormcrown and Thunderchild combinations untested",
+    "Requires responsible caster active effect matching winning Storm Call spell; otherwise visibility fix only",
+    "Migration from ESP/Papyrus version requires new character or independently backed-up test save"
+  ],
+  "sourceSHA256": {
+    "CMakeLists.txt": "23d74ad58dcfe66e554cc46c4628b8484867c8252795b242ea20c3040fec2fa3",
+    "vcpkg.json": "4cb512247c96f553f65eef80f1d40200068784a90827a6f7ee9eda02413bcb68",
+    "src/skse/main.cpp": "4ed460531493eaeeab95146f8c15c8c005b6006933067ed255e49974a3ffe4f8",
+    "src/skse/repeat_queue.h": "83b0a90f0d636797df40312c3b784c3c8f8764be1972816958427d57b799b6b1",
+    "tests/repeat_queue.cpp": "0d4ebbe477170590729a04cfe2349872560c5bc5d97c4f2fca3eb4ad00913cda"
+  }
+}

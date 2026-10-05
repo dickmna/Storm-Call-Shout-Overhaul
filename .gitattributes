@@ -1,0 +1,11 @@
+* text=auto
+src/** -text
+package/** -text
+beta/src/** -text
+beta/package/** -text
+beta/tests/** -text
+tools/** -text
+vcpkg.json -text
+beta/vcpkg.json -text
+dependencies/** -text
+*.lib -text

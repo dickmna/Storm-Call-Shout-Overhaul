@@ -1,0 +1,162 @@
+{
+  "CommonLibSSE-NG": {
+    "tag": "10.0.1",
+    "commit": "de1ca9826919d04649e21e93358d7313459e0a68",
+    "source": "https://github.com/alandtse/CommonLibSSE-NG/tree/de1ca9826919d04649e21e93358d7313459e0a68"
+  },
+  "compiler": "MSVC 19.44.35227 / x64 Release / C++23 /MD",
+  "gameExecutionPerformed": false,
+  "addressLibrary": {
+    "runtime": "1.7.104",
+    "format": 5,
+    "hookTargetsMappedToExecutablePESections": true,
+    "checked": [
+      {
+        "name": "Projectile",
+        "vtableID": 210006,
+        "slot": "0xaa",
+        "targetRVA": "0x7fa510"
+      },
+      {
+        "name": "Projectile",
+        "vtableID": 210006,
+        "slot": "0xad",
+        "targetRVA": "0x7faf50"
+      },
+      {
+        "name": "BeamProjectile",
+        "vtableID": 209914,
+        "slot": "0xaa",
+        "targetRVA": "0x7fa510"
+      },
+      {
+        "name": "BeamProjectile",
+        "vtableID": 209914,
+        "slot": "0xab",
+        "targetRVA": "0x7dffe0"
+      },
+      {
+        "name": "BeamProjectile",
+        "vtableID": 209914,
+        "slot": "0xad",
+        "targetRVA": "0x7faf50"
+      },
+      {
+        "name": "MissileProjectile",
+        "vtableID": 209980,
+        "slot": "0xaa",
+        "targetRVA": "0x7fa510"
+      },
+      {
+        "name": "MissileProjectile",
+        "vtableID": 209980,
+        "slot": "0xad",
+        "targetRVA": "0x7faf50"
+      },
+      {
+        "name": "PlayerCharacter",
+        "vtableID": 208040,
+        "slot": "0xad",
+        "targetRVA": "0x745200"
+      },
+      {
+        "name": "Projectile::Launch",
+        "id": 44108,
+        "RVA": "0x7f9300"
+      },
+      {
+        "name": "Projectile::LaunchData vtable",
+        "id": 187478,
+        "RVA": "0x17f63b0"
+      }
+    ]
+  },
+  "reviewedFeedback": [
+    "https://www.nexusmods.com/skyrimspecialedition/mods/179244?tab=posts",
+    "https://www.nexusmods.com/skyrimspecialedition/mods/179244?tab=bugs"
+  ],
+  "PE": {
+    "dll": "SCSOProjectileBounds.dll",
+    "sha256": "d659cc487b3a4952f0fb5720f6b22be7a53a4316456c8e7a854193a8e85803b7",
+    "machine": "x64",
+    "pluginVersion": "2.1.2",
+    "pluginName": "SCSOProjectileBounds",
+    "exports": [
+      "SKSEPlugin_Load",
+      "SKSEPlugin_Version"
+    ],
+    "imports": [
+      "KERNEL32.dll",
+      "MSVCP140.dll",
+      "SHELL32.dll",
+      "USER32.dll",
+      "VCRUNTIME140.dll",
+      "VCRUNTIME140_1.dll",
+      "VERSION.dll",
+      "api-ms-win-crt-convert-l1-1-0.dll",
+      "api-ms-win-crt-filesystem-l1-1-0.dll",
+      "api-ms-win-crt-heap-l1-1-0.dll",
+      "api-ms-win-crt-locale-l1-1-0.dll",
+      "api-ms-win-crt-math-l1-1-0.dll",
+      "api-ms-win-crt-runtime-l1-1-0.dll",
+      "api-ms-win-crt-stdio-l1-1-0.dll",
+      "api-ms-win-crt-string-l1-1-0.dll",
+      "api-ms-win-crt-time-l1-1-0.dll",
+      "ole32.dll"
+    ],
+    "addressLibraryV5": true,
+    "usesUpdatedStructs": true,
+    "usesNoStructs": false,
+    "compatibleRuntimes": [
+      "1.7.104.0"
+    ],
+    "minimumSKSE": "2.3.1",
+    "windowsLoaderSucceeded": true
+  },
+  "ESP": {
+    "espSHA256": "cd12ccb22aa908d6f34f64001beda6192022855e50ca41e443df3500421d0506",
+    "bytes": 7978,
+    "recordTopologyIdenticalToBase": true,
+    "spellMDOB": {
+      "00018609": "000A59AC",
+      "0001860A": "000A59AC",
+      "0001860D": "000A59AC"
+    },
+    "controllerVMAD": {
+      "000A1A58": {
+        "iTargetsPerUpdate": 0,
+        "iActiveSearchPasses": 1
+      },
+      "000A1A5B": {
+        "iTargetsPerUpdate": 0,
+        "iActiveSearchPasses": 1
+      },
+      "000A1A5C": {
+        "iTargetsPerUpdate": 0,
+        "iActiveSearchPasses": 1
+      },
+      "000D5E81": {
+        "iTargetsPerUpdate": 0,
+        "iActiveSearchPasses": 3
+      },
+      "000E3F09": {
+        "iTargetsPerUpdate": 0,
+        "iActiveSearchPasses": 2
+      },
+      "000E3F0A": {
+        "iTargetsPerUpdate": 0,
+        "iActiveSearchPasses": 1
+      }
+    },
+    "papyrusCompiled": true,
+    "papyrusCompilerErrors": 0,
+    "papyrusCompilerWarnings": 0
+  },
+  "sourceSHA256": {
+    "CMakeLists.txt": "1cec8d5b24b1a2c7b138f8d5fa31c1c15dfcf20d5bbfcdbd01c7dafef75cff18",
+    "vcpkg.json": "fe66c82e92235c0f621b0937ba49f6bbe3081c618503f1ed72febe4584272161",
+    "src/skse/main.cpp": "51f24edb0480b46c4b1e309e031aa88e69806b16f5490a82bc16b426ec2c210e",
+    "src/papyrus/ultrastormcallunified.psc": "642b69c24c84fa958b3138077841c1fd681946368e66aba2daa1b58fe0a8d6a4",
+    "tools/patch_esp_vmad.py": "7c50df0e95462bc6afee02f8d4bc08fbba7c7deac140c567e378e23de2d93584"
+  }
+}

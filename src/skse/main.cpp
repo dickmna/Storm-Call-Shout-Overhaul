@@ -277,19 +277,24 @@ namespace
 	}
 }
 
-SKSEPluginInfo(
-	.Version = { 0, 1, 0, 0 },
-	.Name = PLUGIN_NAME,
-	.Author = "dickmna",
-	.StructCompatibility = SKSE::StructCompatibility::Independent,
-	.RuntimeCompatibility = SKSE::VersionIndependence::AddressLibrary,
-	.MinimumSKSEVersion = { 2, 2, 0, 0 }
-)
+SKSEPluginVersion = []() constexpr {
+	SKSE::PluginVersionData data;
+	data.PluginVersion({ 2, 1, 2, 0 });
+	data.PluginName(PLUGIN_NAME);
+	data.AuthorName("dickmna");
+	data.UsesAddressLibrary();
+	data.UsesUpdatedStructs();
+	data.CompatibleVersions({ SKSE::RUNTIME_SSE_1_7_104 });
+	data.MinimumRequiredXSEVersion({ 2, 3, 1, 0 });
+	return data;
+}();
 
 SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 {
+	if (a_skse->RuntimeVersion() != SKSE::RUNTIME_SSE_1_7_104) {
+		return false;
+	}
 	SKSE::Init(a_skse);
-	PreloadLocalDependencies();
 	SetupLog();
 	SKSE::log::info("{} loaded", PLUGIN_NAME);
 

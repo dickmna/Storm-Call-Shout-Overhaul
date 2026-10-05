@@ -2,13 +2,14 @@ cmake_minimum_required(VERSION 3.24)
 
 project(
 	SCSOProjectileBounds
-	VERSION 0.1.0
+	VERSION 2.1.2
 	LANGUAGES CXX
 )
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
 set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(SKSE_SUPPORT_XBYAK OFF CACHE BOOL "" FORCE)
@@ -16,11 +17,16 @@ set(ENABLE_SKYRIM_SE ON CACHE BOOL "" FORCE)
 set(ENABLE_SKYRIM_AE ON CACHE BOOL "" FORCE)
 set(ENABLE_SKYRIM_VR OFF CACHE BOOL "" FORCE)
 
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/external/CommonLibSSE-NG/CMakeLists.txt")
-	message(FATAL_ERROR "CommonLibSSE-NG submodule is missing. Run: git submodule update --init --recursive")
-endif()
+# Dependencies restored from the corresponding published release source.
+set(COMMONLIBSSE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/CommonLibSSE-NG-10.0.1" CACHE PATH "Matching CommonLibSSE-NG source")
+set(COMMONLIBSSE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/build/commonlib-installed" CACHE PATH "Matching source-built dependencies")
+list(PREPEND CMAKE_PREFIX_PATH "${COMMONLIBSSE_INSTALL_PREFIX}")
 
-add_subdirectory("external/CommonLibSSE-NG" CommonLibSSE-NG EXCLUDE_FROM_ALL)
+find_package(fmt CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
+find_path(RAPIDCSV_INCLUDE_DIR rapidcsv.h REQUIRED)
+find_package(directxtk CONFIG REQUIRED)
+find_package(CommonLibSSE 10.0.1 CONFIG REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
 	src/skse/main.cpp
@@ -31,17 +37,11 @@ target_compile_definitions(${PROJECT_NAME}
 		WIN32_LEAN_AND_MEAN
 		NOMINMAX
 )
+target_include_directories(${PROJECT_NAME} PRIVATE ${RAPIDCSV_INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME}
 	PRIVATE
 		CommonLibSSE::CommonLibSSE
-		delayimp.lib
-)
-
-target_link_options(${PROJECT_NAME}
-	PRIVATE
-		"/DELAYLOAD:fmt.dll"
-		"/DELAYLOAD:spdlog.dll"
 )
 
 target_precompile_headers(${PROJECT_NAME}

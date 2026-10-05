@@ -1,11 +1,12 @@
-# Third-Party Components
+# Third-party components
 
-The source repository references these external projects without vendoring their binaries:
+Matching source and licenses are stored in `dependencies/` and `licenses/`:
 
-- CommonLibSSE-NG, MIT License: https://github.com/CharmedBaryon/CommonLibSSE-NG
-- SKSE: https://skse.silverlock.org/
-- spdlog, MIT License: https://github.com/gabime/spdlog
-- fmt, MIT License: https://github.com/fmtlib/fmt
-- rapidcsv, BSD 3-Clause License: https://github.com/d99kris/rapidcsv
+- CommonLibSSE-NG 10.0.1, commit `de1ca9826919d04649e21e93358d7313459e0a68`: GPL-3.0-or-later with Modding and Linking Exceptions. See its COPYING.txt and EXCEPTIONS.md.
+- fmt and spdlog: MIT.
+- rapidcsv: BSD 3-Clause.
+- DirectXTK and DirectXMath: MIT.
+- MinHook hde64 1.3.4: BSD 2-Clause, retained in LICENSE.txt.
+- Valve OpenVR, pin `60eb187801956ad277f1cae6680e3a410ee0873b`: BSD 3-Clause. Only SDK headers, the win64 import library and license are included; no OpenVR runtime DLL is distributed.
 
-Skyrim, the Creation Kit, and their game data are owned by Bethesda Softworks. No Bethesda game assets are licensed by this repository's MIT license.
+SKSE, Skyrim, the Creation Kit and Bethesda game data remain under their respective ownership and terms. The project's MIT license does not relicense those components or the vendored dependencies.

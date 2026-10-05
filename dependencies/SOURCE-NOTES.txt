@@ -1,0 +1,3 @@
+CommonLibSSE-NG tag 10.0.1 / de1ca9826919d04649e21e93358d7313459e0a68.
+Includes actual local source used for source-built CommonLib and static linked libraries, with CMake export/install helper adjustments used by this build.
+Build with MSVC 19.44, C++23, x64, /MD and x64-windows-static-md dependency triplet. See per-release Docs/SCSO/Source/BUILD.md.
